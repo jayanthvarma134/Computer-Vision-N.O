@@ -26,6 +26,7 @@ else:
 time.sleep(2.0)
 
 
+# the holy loop
 while True:
     frame = vs.read()
     frame = frame[1] if args.get("video", False) else frame
