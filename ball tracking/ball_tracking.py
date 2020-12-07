@@ -20,7 +20,6 @@ pts = deque(maxlen = args["buffer"])
 
 if not args.get("video", False):
     vs = VideoStream(src=0).start()
-    # vs = cv2.VideoCapture(0)
 else:
     vs = cv2.VideoCapture(args["video"])
 
