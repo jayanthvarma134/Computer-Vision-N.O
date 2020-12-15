@@ -18,7 +18,13 @@ CLASSES = ["background", "aeroplane", "bicycle", "bird", "boat",
 "dog", "horse", "motorbike", "person", "pottedplant", "sheep",
 "sofa", "train", "tvmonitor"]
 
+# using the randint instead of uniform gives me an errors with cv2.putText and cv2.rectangle
+# error:
+#     cv2.rectangle(frame, (startX, startY),(endX, endY), COLORS[idx], 2)
+#     TypeError: only size-1 arrays can be converted to Python scalars
+#  I wonder why?
 COLORS = np.random.randint(0, 255, size= (len(CLASSES), 3))
+
 COLORS_2 = np.random.uniform(0, 255, size= (len(CLASSES), 3))
 
 
@@ -41,12 +47,9 @@ while True:
         if confidence > args["conf"]:
             # id of the class detected
             idx = int(detections[0, 0, i, 1])
-            # print(idx)
             box= detections[0, 0, i, 3:7]*np.array([w, h, w, h])
             (startX, startY, endX, endY) = box.astype('int')
 
-            # print(COLORS[idx])
-            # print(COLORS_2[idx])
             cv2.rectangle(frame, (startX, startY),(endX, endY), COLORS_2[idx], 2)
 
             txt = '{} : {:.2f}%'.format(CLASSES[idx], confidence)
