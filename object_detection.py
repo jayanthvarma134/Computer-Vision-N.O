@@ -28,6 +28,14 @@ blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 0.007843,(300, 300),
 net.setInput(blob)
 detections = net.forward()
 
+# shape for detections in case of dogs image with probatility was (0, 0, 3, 7)
+# the model assigned two labels for the same dag, one was dog with 0.8 conf and cat with 0.6 conf
+# the detections is actually a 4 dim array(evident from its shape),
+# the 3rd dim is for the total number of detections: in this case 3(2 dogs and 1 cat(the cat was an error))
+# the 4th dim is the values for each detection 
+# 0= '', 1= the index of the class identified, 2= probability of the detection,
+# 3:6 = bounding box(startX, startY, endX, endY)
+
 for i in np.arange(0, detections.shape[2]):
     confidence = detections[0, 0, i, 2]
 
@@ -43,7 +51,7 @@ for i in np.arange(0, detections.shape[2]):
         y= startY - 15 if startY -15 > 15 else startY + 15
         x = startX + 15
         cv2.putText(image, label,(x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, COLORS[idx], 2)
-cv2.imshow("ouutput", image)
+cv2.imshow("output", image)
 cv2.waitKey(0)
 
 
