@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import cv2
 
 # define 81 classes that the coco model knowns about
 class_names = ['BG', 'person', 'bicycle', 'car', 'motorcycle', 'airplane',
